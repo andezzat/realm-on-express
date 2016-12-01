@@ -120,7 +120,7 @@ app.get('/get/:schema/length', (req, res) => {
 app.post('/write', (req, res, next) => {
   console.info('Processing multiple writes...');
   next();
-}, (req, res, next) => {
+}, (req, res) => {
   rlib.writeToRealm(realm, req.body);
   console.info('Processed the following writes successfully:', req.body);
   res.send({
@@ -132,7 +132,7 @@ app.post('/write', (req, res, next) => {
 app.post('/add/:schema', (req, res, next) => {
   console.info('Adding the following to ', req.params.schema, ' schema:\n', req.body);
   next()
-}, (req, res, next) => {
+}, (req, res) => {
   rlib.writeToRealm(realm, [{ schema: req.params.schema, object: req.body }]);
   console.info(req.params.schema, ' has been added successfully!\n');
   res.send({
@@ -145,7 +145,7 @@ app.post('/add/:schema', (req, res, next) => {
 app.post('/add/:schema/nest', (req, res, next) => {
   // console.info('Adding the following to ', req.params.schema, ' schema and nesting into property named ', req.query.property, ':\n', req.body);
   next()
-}, (req, res, next) => {
+}, (req, res) => {
   console.log(realm.objects(req.params.schema).filtered(req.query.filter)["0"][req.query.property]);
   rlib.writeToRealm(realm, [{ schema: req.params.schema, object: req.body, action: 'nest', filter: req.query.filter, property: req.query.property }]);
   console.info('Object added to ', req.params.schema, 'under property ', req.query.property, ' successfully!\n');
@@ -159,7 +159,7 @@ app.post('/add/:schema/nest', (req, res, next) => {
 app.post('/update/:schema', (req, res, next) => {
   console.info('Updating the following to ', req.params.schema, ' schema:\n', req.body);
   next()
-}, (req, res, next) => {
+}, (req, res) => {
   rlib.writeToRealm(realm, [{ schema: req.params.schema, object: req.body, action: 'update' }]);
   console.info(req.params.schema, ' has been updated successfully!\n');
   res.send({
@@ -172,7 +172,7 @@ app.post('/update/:schema', (req, res, next) => {
 app.post('/delete/:schema', (req, res, next) => {
   console.info('Deleting the following ', req.params.schema, ' :\n', req.query.filter);
   next()
-}, (req, res, next) => {
+}, (req, res) => {
   rlib.writeToRealm(realm, [{ schema: req.params.schema, action: 'delete', filter: req.query.filter }]);
   console.info(req.params.schema, ' has been deleted successfully!\n');
   res.send({
@@ -185,7 +185,7 @@ app.post('/delete/:schema', (req, res, next) => {
 app.post('/delete/:schema/all', (req, res, next) => {
   console.info('Deleting all ', req.params.schema);
   next()
-}, (req, res, next) => {
+}, (req, res) => {
   rlib.writeToRealm(realm, [{ schema: req.params.schema, action: 'deleteAll' }]);
   console.info('All objects of schema type ', req.params.schema, ' have been deleted successfully!\n');
   res.send({
@@ -212,7 +212,7 @@ app.post('/schema/update', (req, res, next) => {
     rlib.writeToRealm(metaRealm, [{ schema: 'meta', object: newMetaRealmData, action: 'add' }]); // Updates the meta data of the realm
   }
   next();
-}, (req, res, next) => {
+}, (req, res) => {
   res.send({
     action: "updateSchema",
     schemaVersion: metaData["0"].schemaVersion,
