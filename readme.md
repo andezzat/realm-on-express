@@ -13,7 +13,9 @@ You can do basic things like:
 The schema and schemaVersion are constantly saved to another Realm called `metaRealm`. It stores objects in a schema called `meta` of your default Realm's `schema` and `schemaVersion`.
 
 ## Quick Start
-- Use `npm start` to begin
+- First, perform an `npm i`
+- Then use `npm start` to start the server
+- It uses nodemon, so all file changes will result in a restart!
 - Use [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en) to send `GET`/`POST` requests
 - Lets' try something like a `GET` request for `localhost:3001`, you should get a response back with the current details of the database.
 - Let's try a simple add, there is a dummy schema on there to get you started.
